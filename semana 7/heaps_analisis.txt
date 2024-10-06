@@ -1,0 +1,79 @@
+*Al hacerlo a mano, se construye el heap (a partir del array)
+---------------------------------------------------------
+MAX-HEAPIFY(A,i)
+1. Toma un nodo (A,i): donde i es el índice
+2. Se haya izquierda y derecha de i
+3. Guarda maximo = i
+4. Si left es mayor que el tamaño del array y A[left]>A[i], guarda left en maximo
+5. Si right es mayor que el tamaño del array y A[right]>A[i], guarda right en maximo
+6. Si el maximo!=i, intercambia A[i] con A[maximo] y llama a MAX-HEAPIFY(A,maximo)
+--------------------------------------------------------
+BUILD-MAX-HEAP(A)
+1. Obtiene la longitud del array A
+2. Itera desde i=longitud/2 hasta 1 y llama a MAX-HEAPIFY(A,i)
+--------------------------------------------------------
+HEAPSORT(A)
+1. Llama a BUILD-MAX-HEAP(A)
+2. Itera desde longitud de A hasta 2:
+	- intercambia A[1] con A[i]
+	- disminuye el tamaño de A en i //similar a eliminar
+ 	- llama a MAX-HEAPIFY(A,1) //desde la raíz
+*construye MAX-HEAP's, elimina el primer elemento (mayor).
+*disminuye el tamaño en 1
+*llama iterativamente al MAX-HEAP 
+--------------------------------------------------------
+MAX-HEAP-INSERT(A,key)
+1. Aumenta el tamaño de A en 1
+2. Coloca un valor muy pequeño en esa última posición
+3. Llama a HEAP-INCREASE-KEY(A,A.heap_size,key)
+--------------------------------------------------------
+HEAP-INCREASE-KEY(A,i,key)
+1. Si key es menor que A[i], retorna error
+2. Asigna A[i]=key
+3. Mientras i sea >1 y A[Parent(i)]<A[i]:
+	- intercambia A[i] con A[parent(i)]
+	- define A=parent(i)
+--------------------------------------------------------
+HEAP-DELETE(A,i)
+1. Si i<1 o i>A.heap_size: Return error //no se puede eliminar
+2. Intercambia A[i] con A[A.heap_size]
+3. Disminuye A.heap_size-1
+4. Mientras A[i]>A[parent(i)] y i>1: //corrige problemas desde i a la raíz
+	- intercambia A[i] con A[parent(i)]
+	- i = parent(i)
+5. Llama a MAX-HEAPIFY(A,i) //para corregir problemas desde nodo i hasta sus nodos hoja
+--------------------------------------------------------
+* MIN-HEAP
+HEAP-MINIMO(A)
+1. Retorna A[1]
+--------------------------------------------------------
+HEAP-EXTRAE-MINIMO(A): elimina mínimo y lo retorna
+1. Si A.heap_size<1: Return error
+2. Define min=A[1]
+3. Intercambia A[1] con A[A.heap_size]
+4. Disminuye A.heap_size-=1
+5. Llama a función MIN-HEAPIFY(A,1)
+6. Retorna min
+--------------------------------------------------------
+MIN-HEAPIFY(A,i): recibe un arreglo y una posición para formar minHEAP
+1. Si i<1 o i>A.heap_size: Return error
+2. Define l=left(i), r=right(i)
+// lo que queremos es que el mínimo valor sea el padre
+3. Si l<A.heap_size y A[l]<A[i]: min = l
+4. Si r<A.heap_size y A[r]<A[i]: min = r
+5. Si min!=i: intercambia A[i] con A[min] y llama a MIN-HEAPIFY(A,i)
+ //luego del swap, A[i] guarda un valor que no es el mínimo
+--------------------------------------------------------
+HEAP-DISMINUYE-LLAVE(A,i,key)
+1. Si A[i]<key: Return error //no se puede disminuir
+2. Si i>A.heap_size o i<1: Return error //no existe posicion
+3. Define A[i]=key
+4. Mientras i>1 y A[i]<A[parent(i)]: //mientras el minimo no sea parent
+	- intercambia A[i] con A[parent(i)]
+	- i = parent(i)
+--------------------------------------------------------
+MIN-HEAP-INSERT(A,key)
+1. Aumenta A.heap_size+=1
+2. Define A[A.heap_size] = (valor muy grande)
+3. HEAP-DISMINUYE-LLAVE(A,A.heap_size,key)
+
