@@ -24,20 +24,25 @@ def YOUNGIFY(young_tablero, i, j):
     
     # Coordenadas de los vecinos derecho y abajo
     down, right = (i + 1, j), (i, j + 1)
+    print("down: ",down," right: ", right)
     
     # Determinar el valor más pequeño entre la posición actual, el vecino de abajo y el vecino a la derecha
+    print("menor_i: ",i, "menor_j: ",j)
     menor_i, menor_j = i, j
-    
+
+    print(1)
+    print("down:",young_tablero[down[0]][down[1]], "<", young_tablero[menor_i][menor_j])
     if down[0] < m and young_tablero[down[0]][down[1]] < young_tablero[menor_i][menor_j]:
-        print(1)
         menor_i, menor_j = down
     
+    print(2)
+    #print("right: ", young_tablero[right[0]][right[1]] ,"<", young_tablero[menor_i][menor_j])
     if right[1] < n and young_tablero[right[0]][right[1]] < young_tablero[menor_i][menor_j]:
-        print(2)
         menor_i, menor_j = right
     
     # Si hay un valor más pequeño en uno de los vecinos, hacer el intercambio
     if (menor_i, menor_j) != (i, j):
+        print("swap: ",young_tablero[menor_i][menor_j])
         young_tablero[i][j], young_tablero[menor_i][menor_j] = young_tablero[menor_i][menor_j], young_tablero[i][j]
         # Llamada recursiva
         YOUNGIFY(young_tablero, menor_i, menor_j)
